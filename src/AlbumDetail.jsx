@@ -18,7 +18,7 @@ export default function AlbumDetail() {
 
     fetchAlbum();
   }, [slug]);
-
+ 
   if (!album) return <p>Loading...</p>;
 
   return (
