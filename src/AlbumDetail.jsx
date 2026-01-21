@@ -1,33 +1,43 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Stack from "./contentstack";
+import { useEffect, useState } from "react";
+import contentstack from "./contentstack";
 
-export default function AlbumDetail() {
+const AlbumDetail = () => {
   const { slug } = useParams();
   const [album, setAlbum] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  console.log("Slug from URL:", slug);
 
   useEffect(() => {
     const fetchAlbum = async () => {
-      const Query = Stack.ContentType("album")
-        .Query()
-        .where("slug", slug);
+      try {
+        console.log("Fetching album for slug:", slug);
 
-      const result = await Query.toJSON().find();
-      setAlbum(result[0][0]);
+        const Query = contentstack
+          .ContentType("album")
+          .Entry()
+          .query({ slug });
+
+        const result = await Query.find();
+
+        console.log("API response:", result);
+
+        setAlbum(result[0][0]);
+      } catch (error) {
+        console.error("Contentstack error:", error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchAlbum();
   }, [slug]);
- 
-  if (!album) return <p>Loading...</p>;
 
-  return (
-    <div>
-      <h1>{album.title}</h1>
-      <img src={album.cover_image.url} alt={album.title} width={300} />
-      <p>Release Date: {album.release_date}</p>
-      <a href={album.spotify_url} target="_blank">Spotify</a> | 
-      <a href={album.youtube_url} target="_blank">YouTube</a>
-    </div>
-  );
-}
+  if (loading) return <h2>Loading...</h2>;
+  if (!album) return <h2>No album found</h2>;
+
+  return <h1>{album.album_title}</h1>;
+};
+
+export default AlbumDetail;
