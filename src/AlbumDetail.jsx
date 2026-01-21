@@ -17,7 +17,7 @@ const AlbumDetail = () => {
         const Query = contentstack
           .ContentType("album")
           .Entry()
-          .query({ slug });
+          ._query({ slug });
 
         const result = await Query.find();
 
