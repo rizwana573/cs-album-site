@@ -7,7 +7,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/album" element={<AlbumList />} />
-        <Route path="/album/:slug" element={<AlbumDetail />} />
+        <Route path="/:slug" element={<AlbumDetail />} />
       </Routes>
     </BrowserRouter>
   );
