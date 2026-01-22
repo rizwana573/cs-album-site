@@ -7,8 +7,6 @@ const AlbumDetail = () => {
   const [album, setAlbum] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  console.log("Slug from URL:", slug);
-
   useEffect(() => {
     const fetchAlbum = async () => {
       try {
@@ -16,14 +14,14 @@ const AlbumDetail = () => {
 
         const Query = contentstack
           .ContentType("album")
-          .Entry()
-          ._query({ slug });
+          .Query()
+          .where("slug", slug);
 
         const result = await Query.find();
 
         console.log("API response:", result);
 
-        setAlbum(result[0][0]);
+        setAlbum(result?.[0]?.[0]);
       } catch (error) {
         console.error("Contentstack error:", error);
       } finally {
