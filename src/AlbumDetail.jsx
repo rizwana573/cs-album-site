@@ -34,17 +34,17 @@ const AlbumDetail = () => {
 
   return (
     <div>
-      <h1>{album.album_title}</h1>
+      <h1>{album.title}</h1>
       <p>Release Date: {album.release_date}</p>
-      <p>Label: {album.label}</p>
-      <p>Artist: {album.artist_name}</p>
+      <p>Label: {album.global_field.label}</p>
+      <p>Artist: {album.global_field.artist_name}</p>
       <img src={album.cover_image?.url} alt={album.album_title} />
       <div>
-        <a href={album.spotify_link} target="_blank">
+        <a href={album.spotify.href} target="_blank">
           Listen on Spotify
         </a>
         <br />
-        <a href={album.youtube_link} target="_blank">
+        <a href={album.youtube.href} target="_blank">
           Watch on YouTube
         </a>
       </div>
